@@ -1,5 +1,3 @@
-_G.theme = _G.grabtheme
-
 local versionNumber = "1.0"
 local version = "DustWare v"..versionNumber
 
@@ -10,7 +8,7 @@ local UI = Material.Load({
      Style = 3,
      SizeX = 400,
      SizeY = 300,
-     Theme _G.theme
+     Theme = _G.theme
 })
 
 local Page = UI.New({
