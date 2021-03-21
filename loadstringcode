@@ -1,3 +1,34 @@
+--// Credits go to a cool guy named Stefan for the anti cheat bypass love u bro no homo
+
+for i,v in pairs(getconnections(game:GetService("ScriptContext").Error)) do
+    v:Disable()
+end
+for i,v in pairs(getconnections(game:GetService("LogService").MessageOut)) do
+    v:Disable()
+end
+
+local rem = game.ReplicatedStorage.RemoteEvents:WaitForChild("LightTorchOLD")
+local mt = getrawmetatable(game)
+local backup = mt.__namecall
+setreadonly(mt,false)
+mt.__namecall = newcclosure(function(self,...)
+    if checkcaller() then return backup(self,...) end
+    if getnamecallmethod() == "FireServer" and self == rem then
+        local args = {...}
+        local N
+        pcall(function()
+            N = tonumber(args[1])
+        end)
+        if type(N) == "number" then
+            return
+        end
+    end
+    return backup(self,...)
+end)
+setreadonly(mt,true)
+
+--// go ahead steal it you skid
+
 
 --[[
 AztupBrew(Fork of IronBrew2): obfuscation; Version 2.7.2
