@@ -663,7 +663,7 @@ function App.Load(settings)
 
 			function Returned:SetValue(value)
 				ValueLabel.Text = value
-				Slider_Frame.Size = UDim2.new(0, math.clamp((MaxValue - MinValue) - value, 0, 480), 1, 0)
+				Slider_Frame.Size = UDim2.new(0, math.clamp(((MaxValue - MinValue) - value) - Slider.AbsoluteSize.X, 0, 480), 1, 0)
 			end
 			
 			function Returned:SetText(text)
