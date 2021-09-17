@@ -1,1 +1,2 @@
 warn("no")
+error("ner")
