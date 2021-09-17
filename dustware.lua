@@ -1,1 +1,1 @@
-print"DustWare Soon Pog?"
+warn("no")
