@@ -2584,7 +2584,7 @@ local SettingSection = SettingsColumn:AddSection("Menu");
 local ConfigSection = SettingsColumn2:AddSection("Configs");
 local Warning = library:AddWarning({type = "confirm"});
 
-SettingSection:AddBind({text = "Open / Close", flag = "UI Toggle", nomouse = true, key = "Delete", callback = function()
+SettingSection:AddBind({text = "Open / Close", flag = "UI Toggle", nomouse = true, key = "RightShift", callback = function()
     library:Close();
 end});
 
