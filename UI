@@ -2348,6 +2348,8 @@ function library:Init()
 	elseif syn then
 		syn.protect_gui(self.base)
 		self.base.Parent = game:GetService"CoreGui"
+        else
+                self.base.Parent = game:GetService"CoreGui"
 	end
 	getgenv().base = self.base
 	self.main = self:Create("ImageButton", {
