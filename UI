@@ -1,4 +1,3 @@
--- [Jan's UI Library Source] --------------------------------------------------------------------------------------------------------------------------------------------------
 getgenv().runService = game:GetService"RunService"
 getgenv().textService = game:GetService"TextService"
 getgenv().inputService = game:GetService"UserInputService"
@@ -2494,22 +2493,6 @@ function library:Init()
 			column.main.Visible = true
 		end
 	end
-	spawn(function()
-		while library do
-			wait(1)
-			local Configs = self:GetConfigs()
-			for _, config in next, Configs do
-				if not table.find(self.options["Config List"].values, config) then
-					self.options["Config List"]:AddValue(config)
-				end
-			end
-			for i, config in next, self.options["Config List"].values do
-				if not table.find(Configs, config) then
-					self.options["Config List"]:RemoveValue(config)
-				end
-			end
-		end
-	end)
 	for _, tab in next, self.tabs do
 		if tab.canInit then
 			tab:Init()
@@ -2579,3 +2562,77 @@ function library:Init()
 		end)
 	end
 end
+
+local SettingsTab = library:AddTab("Settings"); 
+local SettingsColumn = SettingsTab:AddColumn(); 
+local SettingsColumn2 = SettingsTab:AddColumn(); 
+local SettingSection = SettingsColumn:AddSection("Menu"); 
+local Warning = library:AddWarning({type = "confirm"});
+
+SettingSection:AddBind({text = "Open / Close", flag = "UI Toggle", nomouse = true, key = "RightShift", callback = function()
+    library:Close();
+end});
+
+SettingSection:AddColor({text = "Accent Color", flag = "Menu Accent Color", color = Color3.fromRGB(255, 59, 59), callback = function(color)
+    if library.currentTab then
+        library.currentTab.button.TextColor3 = color;
+    end
+    for i,v in pairs(library.theme) do
+        v[(v.ClassName == "TextLabel" and "TextColor3") or (v.ClassName == "ImageLabel" and "ImageColor3") or "BackgroundColor3"] = color;
+    end
+end});
+
+
+-- [Background List]
+local backgroundlist = {
+    Floral = "rbxassetid://5553946656",
+    Flowers = "rbxassetid://6071575925",
+    Circles = "rbxassetid://6071579801",
+    Hearts = "rbxassetid://6073763717"
+};
+
+-- [Background List]
+local back = SettingSection:AddList({text = "Background", max = 4, flag = "background", values = {"Floral", "Flowers", "Circles", "Hearts"}, value = "Floral", callback = function(v)
+    if library.main then
+        library.main.Image = backgroundlist[v];
+    end
+end});
+
+-- [Background Color Picker]
+back:AddColor({flag = "backgroundcolor", color = Color3.new(), callback = function(color)
+    if library.main then
+        library.main.ImageColor3 = color;
+    end
+end, trans = 1, calltrans = function(trans)
+    if library.main then
+        library.main.ImageTransparency = 1 - trans;
+    end
+end});
+
+-- [Tile Size Slider]
+SettingSection:AddSlider({text = "Tile Size", min = 50, max = 500, value = 125, callback = function(size)
+    if library.main then
+        library.main.TileSize = UDim2.new(0, size, 0, size);
+    end
+end});
+
+-- [Discord Button]
+SettingSection:AddButton({text = "Discord", callback = function()
+    syn.request({
+		Url = "http://127.0.0.1:6463/rpc?v=1",
+		Method = "POST",
+		Headers = {
+			["Content-Type"] = "application/json",
+			["origin"] = "https://discord.com",
+		},
+		Body = game:GetService("HttpService"):JSONEncode(
+            {
+			args = {
+				code = "drczhc3pcB",
+			},
+			cmd = "INVITE_BROWSER",
+			nonce = "0"
+		}
+        )
+	})
+end});
