@@ -2580,6 +2580,7 @@ function library:Init()
 	end
 end
 
+--[[
 local SettingsTab = library:AddTab("Settings"); 
 local SettingsColumn = SettingsTab:AddColumn(); 
 local SettingsColumn2 = SettingsTab:AddColumn(); 
@@ -2654,6 +2655,8 @@ SettingSection:AddButton({text = "Discord", callback = function()
         )
 	})
 end});
+
+--]]
 
 --[[
 -- [Config Box]
